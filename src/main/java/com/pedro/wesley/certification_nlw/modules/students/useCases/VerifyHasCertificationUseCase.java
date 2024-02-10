@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pedro.wesley.certification_nlw.modules.students.dto.VerififyHasCertificationDTO;
-import com.pedro.wesley.certification_nlw.modules.students.repositories.CertificationEstudentRepository;
+import com.pedro.wesley.certification_nlw.modules.students.repositories.CertificationStudentRepository;
 
 @Service
 public class VerifyHasCertificationUseCase {
 
     @Autowired
-    private CertificationEstudentRepository certificationEstudentRepository;
+    private CertificationStudentRepository certificationEstudentRepository;
 
     public boolean execute(VerififyHasCertificationDTO dto) {
 
