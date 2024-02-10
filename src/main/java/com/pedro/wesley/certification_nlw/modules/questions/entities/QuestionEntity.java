@@ -27,7 +27,7 @@ public class QuestionEntity {
     private UUID id;
 
     @Column(length = 50)
-    private String tecnology;
+    private String technology;
 
     @Column(length = 100)
     private String description;
