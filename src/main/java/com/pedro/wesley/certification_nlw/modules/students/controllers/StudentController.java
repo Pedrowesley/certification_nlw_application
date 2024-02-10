@@ -2,7 +2,9 @@ package com.pedro.wesley.certification_nlw.modules.students.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pedro.wesley.certification_nlw.modules.students.dto.StudentCertificationAnswersDTO;
 import com.pedro.wesley.certification_nlw.modules.students.dto.VerififyHasCertificationDTO;
+import com.pedro.wesley.certification_nlw.modules.students.useCases.StudentCertificationAnswersUseCase;
 import com.pedro.wesley.certification_nlw.modules.students.useCases.VerifyHasCertificationUseCase;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,9 @@ public class StudentController {
     @Autowired
     private VerifyHasCertificationUseCase verifyHasCertificationUseCase;
 
+    @Autowired
+    private StudentCertificationAnswersUseCase studentCertificationAnswersUseCase;
+
     @PostMapping("verififyIfHasCertification")
     public String verififyIfHasCertification(@RequestBody VerififyHasCertificationDTO verififyHasCertificationDTO) {
         var result = verifyHasCertificationUseCase.execute(verififyHasCertificationDTO);
@@ -24,5 +29,10 @@ public class StudentController {
             return "Usuário possui a certificação";
         }
         return "Usuário não possui a certificação";
+    }
+
+    @PostMapping("/certification/answer")
+    public StudentCertificationAnswersDTO certificationAnswer(@RequestBody StudentCertificationAnswersDTO dto) {
+        return studentCertificationAnswersUseCase.execute(dto);
     }
 }
