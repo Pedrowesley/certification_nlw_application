@@ -49,3 +49,27 @@ certification_nlw_application is a Java Spring Boot application built with Java 
 
 - Configure application properties in `src/main/resources/application.properties` as needed.
 - Customize exam templates and certification formats in the respective files.
+
+## Running with Docker
+
+This application uses PostgreSQL as its database. To run the PostgreSQL database in a Docker container, you can use Docker Compose.
+
+1. Ensure Docker and Docker Compose are installed on your machine. If not, you can download them from the [Docker website](https://www.docker.com/get-started).
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd certification_nlw_application
+   ```
+
+3. Run the Docker Compose command:
+
+   ```bash
+   docker-compose up -d
+   ```
+
+This will start a PostgreSQL container named `postgres_nlw` running on port 5434. The database
+
+pg_nlw `is created with` admin as both the username and password.
+
+Remember, the application is configured to connect to this database. If you change any details (like the port, username, password, or database name), make sure to update the application's configuration in `src/main/resources/application.properties` accordingly.
