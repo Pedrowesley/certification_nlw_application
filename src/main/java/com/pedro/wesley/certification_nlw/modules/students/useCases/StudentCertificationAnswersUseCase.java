@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class StudentCertificationAnswersUseCase {
 
         List<QuestionEntity> questionEntity = questionRepository.findByTechnology(dto.getTechnology());
         List<AnswersCertificationsEntity> answersCertifications = new ArrayList<>();
+        AtomicInteger correctAnswers = new AtomicInteger(0);
 
         dto.getQuestionsAnswers().forEach(questionAnswer -> {
             Optional<QuestionEntity> optionalQuestion = questionEntity.stream()
@@ -50,6 +52,7 @@ public class StudentCertificationAnswersUseCase {
 
                 if (correctAlternative.getId().equals(questionAnswer.getAlternativeId())) {
                     questionAnswer.setCorrect(true);
+                    correctAnswers.getAndIncrement();
                 } else {
                     questionAnswer.setCorrect(false);
                 }
@@ -75,6 +78,7 @@ public class StudentCertificationAnswersUseCase {
 
         CertificationStudentEntity certificationStudentEntity = CertificationStudentEntity.builder()
                 .tecnology(dto.getTechnology())
+                .grade(correctAnswers.get())
                 .studentId(studentId)
                 .build();
 
