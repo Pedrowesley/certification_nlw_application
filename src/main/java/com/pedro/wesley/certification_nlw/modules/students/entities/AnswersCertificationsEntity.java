@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,10 +16,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -32,14 +36,11 @@ public class AnswersCertificationsEntity {
 
     @ManyToOne()
     @JoinColumn(name = "certification_id", insertable = false, updatable = false)
+    @JsonBackReference
     private CertificationStudentEntity certificationStudentEntity;
 
     @Column(name = "student_id")
     private UUID studentId;
-
-    @ManyToOne()
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
-    private StudentEntity studentEntity;
 
     @Column(name = "question_id")
     private UUID questionId;
@@ -47,8 +48,12 @@ public class AnswersCertificationsEntity {
     @Column(name = "answer_id")
     private UUID answerId;
 
+    @ManyToOne()
+    @JoinColumn(name = "student_id", insertable = false, updatable = false)
+    private StudentEntity studentEntity;
+
     @Column(name = "is_correct")
-    private UUID isCorrect;
+    private boolean isCorrect;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
