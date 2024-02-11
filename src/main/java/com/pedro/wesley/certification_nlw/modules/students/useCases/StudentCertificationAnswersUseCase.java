@@ -13,6 +13,7 @@ import com.pedro.wesley.certification_nlw.modules.questions.entities.Alternative
 import com.pedro.wesley.certification_nlw.modules.questions.entities.QuestionEntity;
 import com.pedro.wesley.certification_nlw.modules.questions.repositories.QuestionRepository;
 import com.pedro.wesley.certification_nlw.modules.students.dto.StudentCertificationAnswersDTO;
+import com.pedro.wesley.certification_nlw.modules.students.dto.VerififyHasCertificationDTO;
 import com.pedro.wesley.certification_nlw.modules.students.entities.AnswersCertificationsEntity;
 import com.pedro.wesley.certification_nlw.modules.students.entities.CertificationStudentEntity;
 import com.pedro.wesley.certification_nlw.modules.students.entities.StudentEntity;
@@ -31,8 +32,16 @@ public class StudentCertificationAnswersUseCase {
     @Autowired
     private CertificationStudentRepository certificationStudentRepository;
 
+    @Autowired
+    private VerifyHasCertificationUseCase verifyHasCertificationUseCase;
+
     @SuppressWarnings("null")
-    public CertificationStudentEntity execute(StudentCertificationAnswersDTO dto) {
+    public CertificationStudentEntity execute(StudentCertificationAnswersDTO dto) throws Exception {
+
+        if (verifyHasCertificationUseCase
+                .execute(new VerififyHasCertificationDTO(dto.getEmail(), dto.getTechnology()))) {
+            throw new Exception("Student already has certification");
+        }
 
         List<QuestionEntity> questionEntity = questionRepository.findByTechnology(dto.getTechnology());
         List<AnswersCertificationsEntity> answersCertifications = new ArrayList<>();
