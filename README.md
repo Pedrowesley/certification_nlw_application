@@ -1,6 +1,4 @@
-#
-
-Welcome to certification_nlw_application!
+#Welcome to certification_nlw_application - JAVA (Spring Boot)!
 
 ## Description
 
